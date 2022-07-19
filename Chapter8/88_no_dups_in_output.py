@@ -1,37 +1,22 @@
-from collections import Counter
-
 def f(s):
-    mset = Counter(s)
-    ans = []
-    g('', mset, len(s), ans)
-    return ans
+    if not s:
+        yield ''
+        return
+    from collections import Counter
+    yield from g(len(s), Counter(s), '')
 
-def g(prefix, mset, remaining, ans):
-    if not remaining:
-        ans.append(prefix)
+def g(perm_len, mset, prefix):
+    if len(prefix) == perm_len:
+        yield prefix
         return
 
-    for c, count in mset.items():
+    for char, count in mset.items():
         if not count:
             continue
+        mset[char] = count - 1
+        yield from g(perm_len, mset, prefix + char)
+        mset[char] = count
 
-        mset[c] = count - 1
-        g(prefix + c, mset, remaining - 1, ans)
-        mset[c] = count
-
-y = f('aaabb')
-print('Count: {0}'.format(len(y)))
-for x in y:
-    print(x)
-
-# Count: 10
-# aaabb
-# aabab
-# aabba
-# abaab
-# ababa
-# abbaa
-# baaab
-# baaba
-# babaa
-# bbaaa
+assert (*f(''),) == ('',)
+assert (*f('aaa'),) == ('aaa',)
+assert (*f('aaab'),) == ('aaab', 'aaba', 'abaa', 'baaa')
