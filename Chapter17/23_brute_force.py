@@ -14,8 +14,8 @@ def get_subm(A, n):
                 return (i, j, n)
     return None
 
-def is_border(A, value, row, col, subm_len):
-    n = len(A) - m + 1
+def is_border(A, value, row, col, nsubms):
+    n = len(A) - nsubms + 1
     for k in range(n):
         if (   A[row        ][col + k] != value
             or A[row + n - 1][col + k] != value
@@ -23,3 +23,19 @@ def is_border(A, value, row, col, subm_len):
             or A[row + k][col + n - 1] != value):
             return False
     return True
+
+
+assert f([[0,0,0,0],
+          [0,0,0,0],
+          [0,0,0,0],
+          [0,0,0,0],]) == (0, 0, 4)
+
+assert f([[1,0,0,0],
+          [0,0,0,0],
+          [0,0,0,0],
+          [0,0,0,0],]) == (0, 1, 3)
+
+assert f([[1,0,0,0],
+          [0,1,0,0],
+          [0,0,0,0],
+          [0,0,0,0],]) == (0, 2, 2)
