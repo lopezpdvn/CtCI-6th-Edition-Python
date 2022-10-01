@@ -2,7 +2,7 @@ class Animal: pass
 class Dog(Animal): pass
 class Cat(Animal): pass
 
-class Shelther:
+class Shelter:
     def __init__(self):
         from collections import deque
         self.cats = deque()
@@ -42,7 +42,7 @@ class Shelther:
         self.count_anml -= 1
         return anml
 
-shelter = Shelther()
+shelter = Shelter()
 assert shelter.enqueue(Dog()) == 1
 assert shelter.enqueue(Dog()) == 2
 assert shelter.enqueue(Cat()) == 3
