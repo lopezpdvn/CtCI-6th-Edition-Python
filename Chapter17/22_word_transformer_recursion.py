@@ -44,7 +44,7 @@ def get_nbor1chr(words):
 
     return nbor1chr
 
-assert f('DAMP', 'DAMP', ()) == ('DAMP')
+assert f('DAMP', 'DAMP', ()) == ('DAMP',)
 assert f('DAMP', 'LIKE', (
     'LIMP', 'LAMP', 'DAMP', 'LIKE', 'LIME')) == (
         'DAMP', 'LAMP', 'LIMP', 'LIME', 'LIKE')
