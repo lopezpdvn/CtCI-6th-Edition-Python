@@ -1,35 +1,44 @@
+class CellState:
+    Empty = 0
+    Red = 1
+    Blue = 2
 
 def f(A):
-    if not A: return 0
+    if not A: return CellState.Empty
     n = len(A)
-    x = check_board(A, 0, 0, 1, 1)
-    if x: return x
-    x = check_board(A, 0, n - 1, 1, -1)
-    if x: return x
+    result = evaline(A, 0, 0, 1, 1)
+    if result != CellState.Empty:
+        return result
+    result = evaline(A, 0, n - 1, 1, -1)
+    if result != CellState.Empty:
+        return result
+    for k in range(n):
+        result = evaline(A, k, 0, 0, 1)
+        if result != CellState.Empty:
+            return result
+        result = evaline(A, 0, k, 1, 0)
+        if result != CellState.Empty:
+            return result
 
-    for i in range(n):
-        x = check_board(A, i, 0, 0, 1)
-        if x: return x
-        x = check_board(A, 0, i, 1, 0)
-        if x: return x
+    return CellState.Empty
 
-    return 0
-
-def check_board(A, row, col, rowd, cold):
+def evaline(A, row, col, rmove, cmove):
     n = len(A)
-    could_win = 0
-    for i in range(n):
-        player = A[row][col]
-        if not i:
-            could_win = player
-            row += rowd
-            col += cold
-            continue
-        row += rowd
-        col += cold
-        if player != could_win: return 0
+    result = None
+    i = row
+    j = col
+    while i < n and j < n:
+        if result is None:
+            result = A[i][j]
+            if result == CellState.Empty:
+                return result
+        elif result != A[i][j]:
+            return CellState.Empty
 
-    return could_win
+        i += rmove
+        j += cmove
+
+    return result
 
 assert f([[1, 1],
           [2, 0]]) == 1
