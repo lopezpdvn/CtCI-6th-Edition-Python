@@ -1,47 +1,51 @@
 def f(A):
   if not A: return None
-  n = len(A)
-  for k in range(n, 0, -1):
-    subm = get_subm(A, k)
-    if subm:
-      row, col, size = subm
-      return [A[i][col:col+size]
-              for i in range(row, row + size)]
+
+  for size in range(len(A), 0, -1):
+    x = get_bordered(A, size, 0)
+    if x is None: continue
+    row, col = x
+    return [A[i][col : col + size]
+            for i in range(row, row + size)]
+
   return None
 
-def get_subm(A, n):
-  nsubms = len(A) - n + 1
-  for i in range(nsubms):
-    for j in range(nsubms):
-      if is_border(A, 0, i, j, n):
-        return (i, j, n)
+def get_bordered(A, size, value):
+  n_subms = len(A) - size + 1
+
+  for i in range(n_subms):
+    for j in range(n_subms):
+      if is_bordered(A, i, j, size, value):
+        return i, j
+
   return None
 
-def is_border(A, value, row, col, size):
-  for k in range(size):
-    if (   A[row    ][col + k] != value
-      or A[row + size - 1][col + k] != value
-      or A[row + k][col    ] != value
-      or A[row + k][col + size - 1] != value):
+def is_bordered(A, i, j, size, val):
+  for offset in range(size):
+    if (   A[i + offset  ][j           ] != val
+        or A[i + offset  ][j + size - 1] != val
+        or A[i           ][j + offset  ] != val
+        or A[i + size - 1][j + offset  ] != val):
       return False
+
   return True
 
 
 assert f([[0,0,0,0],
-      [0,0,0,0],
-      [0,0,0,0],
-      [0,0,0,0],]) == [[0,0,0,0],
-                       [0,0,0,0],
-                       [0,0,0,0],
-                       [0,0,0,0],]
+          [0,0,0,0],
+          [0,0,0,0],
+          [0,0,0,0],]) == [[0,0,0,0],
+                           [0,0,0,0],
+                           [0,0,0,0],
+                           [0,0,0,0],]
 assert f([[1,0,0,0],
-      [0,0,0,0],
-      [0,0,0,0],
-      [0,0,0,0],]) == [[0,0,0],
-                       [0,0,0],
-                       [0,0,0],]
+          [0,0,0,0],
+          [0,0,0,0],
+          [0,0,0,0],]) == [[0,0,0],
+                           [0,0,0],
+                           [0,0,0],]
 assert f([[1,0,0,0],
-      [0,1,0,0],
-      [0,0,0,0],
-      [0,0,0,0],]) == [[0, 0],
-                       [0, 0],]
+          [0,1,0,0],
+          [0,0,0,0],
+          [0,0,0,0],]) == [[0, 0],
+                           [0, 0],]
