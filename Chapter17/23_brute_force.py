@@ -5,8 +5,8 @@ def f(A):
     x = get_bordered(A, size, 0)
     if x is None: continue
     row, col = x
-    return [A[i][col : col + size]
-            for i in range(row, row + size)]
+    return [row[col : col + size]
+            for row in A[row : row + size]]
 
   return None
 
