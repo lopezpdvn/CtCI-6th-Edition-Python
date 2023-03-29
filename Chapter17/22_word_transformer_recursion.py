@@ -1,6 +1,6 @@
 def f(src, dst, words):
     if src == dst:
-        return (src)
+        return (src,)
     nbor1chr = get_nbor1chr(words)
     from collections import deque
     path = deque()
@@ -34,13 +34,13 @@ def get_nbors(nbor1chr, visited, x):
 
 
 def get_nbor1chr(words):
-    from collections import defaultdict, deque
-    nbor1chr = defaultdict(deque)
+    from collections import defaultdict
+    nbor1chr = defaultdict(set)
     n = len(words[0])
     for word in words:
         for i in range(n):
             key = f'{word[:i]}*{word[i + 1:]}'
-            nbor1chr[key].append(word)
+            nbor1chr[key].add(word)
 
     return nbor1chr
 
