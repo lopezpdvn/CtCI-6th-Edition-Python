@@ -60,6 +60,6 @@ x = DS(5,1,4,4,5,9,7)
 assert x.get_rank(-1) == 0
 assert x.get_rank(5) == 4
 assert x.get_rank(7) == 5
-assert x.get_rank(8) == 6   # not in tree
-assert x.get_rank(10) == 7  # not in tree
-assert x.get_rank(9999) == 7  # not in tree
+assert x.get_rank(8) == 6
+assert x.get_rank(10) == 7
+assert x.get_rank(9999) == 7
