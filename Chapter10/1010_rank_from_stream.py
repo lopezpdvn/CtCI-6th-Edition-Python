@@ -13,12 +13,16 @@ class BSTNode:
                 return 0
             return self.left.get_rank(value)
 
-        rrank = (self.right.get_rank(value)
-            if self.right else -1)
+        if self.right:
+            rrank = (self.right.get_rank(value)
+                if self.right else -1)
+            lrank = self.lsize or 0
+            if rrank >= 0:
+                return 1 + lrank + rrank
+            return -1
+
         lrank = self.lsize or 0
-        if rrank >= 0:
-            return 1 + lrank + rrank
-        return -1
+        return lrank + 1
 
     def track(self, value):
         if value <= self.value:
@@ -60,3 +64,4 @@ x = DS(5,1,4,4,5,9,7)
 assert x.get_rank(5) == 4
 assert x.get_rank(7) == 5
 assert x.get_rank(8) == 6
+assert x.get_rank(10) == 7
