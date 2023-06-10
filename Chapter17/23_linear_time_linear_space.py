@@ -7,13 +7,11 @@ def f(A):
   for i in range(len(A)):
     for j in range(len(A[0])):
       left, up = B[i][j]
-      if up != left: continue
-      imax_eq_dim = up
+      imax_eq_dim = min(left, up)
       down = B[i + imax_eq_dim - 1][j][1]
       right = B[i][j + imax_eq_dim - 1][0]
-      if (down != imax_eq_dim or
-        right != imax_eq_dim or
-        imax_eq_dim <= max_eq_dim):
+      imax_eq_dim = min(imax_eq_dim, down, right)
+      if imax_eq_dim <= max_eq_dim:
         continue
       max_eq_dim = imax_eq_dim
       irow = i
@@ -51,6 +49,12 @@ assert f([[1,0,0,0],
           [0,0,0,0],
           [0,0,0,0],
           [0,0,0,0],]) == [[0,0,0],
+                           [0,0,0],
+                           [0,0,0],]
+assert f([[0,0,0,0],
+          [0,0,0,0],
+          [0,0,0,0],
+          [0,0,0,1],]) == [[0,0,0],
                            [0,0,0],
                            [0,0,0],]
 assert f([[1,0,0,0],
