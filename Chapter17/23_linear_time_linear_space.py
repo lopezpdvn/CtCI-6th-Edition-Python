@@ -1,21 +1,17 @@
 def f(A):
-  A = A or [[]]
-  max_eq_dim = 0
+  A, max_eq_dim = A or [[]], 0
   if not A or not A[0]: return max_eq_dim
   B = get_B(A)
 
   for i in range(len(A)):
-    for j in range(len(A[0])):
+    for j in range(len(A)):
       left, up = B[i][j]
       imax_eq_dim = min(left, up)
       down = B[i + imax_eq_dim - 1][j][1]
       right = B[i][j + imax_eq_dim - 1][0]
       imax_eq_dim = min(imax_eq_dim, down, right)
-      if imax_eq_dim <= max_eq_dim:
-        continue
-      max_eq_dim = imax_eq_dim
-      irow = i
-      icol = j
+      if imax_eq_dim <= max_eq_dim: continue
+      max_eq_dim, irow, icol = imax_eq_dim, i, j
 
   return [row[icol : icol + max_eq_dim]
     for row in A[irow : irow + max_eq_dim]]
@@ -23,18 +19,15 @@ def f(A):
 
 def get_B(A, value=0):
   n = len(A)
-  B = [[None for i in range(n)] for j in range(n)]
+  B = [[[0,0] for i in range(n)]
+              for j in range(n)]
 
   for i in range(n - 1, -1, -1):
     for j in range(n - 1, -1, -1):
-      if A[i][j] != value:
-        B[i][j] = [0, 0]
-        continue
+      if A[i][j] != value: continue
       B[i][j] = [1, 1]
-      if j + 1 < n:
-        B[i][j][1] += B[i][j + 1][1]
-      if i + 1 < n:
-        B[i][j][0] += B[i + 1][j][0]
+      if i + 1 < n: B[i][j][0] += B[i + 1][j][0]
+      if j + 1 < n: B[i][j][1] += B[i][j + 1][1]
 
   return B
 
