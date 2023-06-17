@@ -9,11 +9,11 @@ def f(src, dst, words):
     return (*path,)
 
 def g(dst, nbor1chr, path, visited, src):
+    visited.add(src)
+
     if src == dst:
         path.appendleft(src)
         return True
-
-    visited.add(src)
 
     for nbor in get_nbors(nbor1chr, visited, src):
         x = g(dst, nbor1chr, path, visited, nbor)
