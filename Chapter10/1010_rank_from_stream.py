@@ -46,8 +46,8 @@ class DS:
       return self.root.track(e)
 
   def get_rank(self, value):
-    if not self.root: return 0
-    return self.root.get_rank(value)
+    return (self.root.get_rank(value)
+            if self.root else 0)
 
 
 x = DS(5,1,4,4,5,9,7,13,3)
