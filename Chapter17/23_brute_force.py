@@ -1,5 +1,5 @@
 def f(A):
-  if not A: return None
+  if not A or not A[0]: return []
 
   for size in range(len(A), 0, -1):
     x = get_bordered(A, size, 0)
@@ -8,7 +8,7 @@ def f(A):
     return [row[col : col + size]
             for row in A[row : row + size]]
 
-  return None
+  return []
 
 def get_bordered(A, size, value):
   n_subms = len(A) - size + 1
@@ -30,6 +30,14 @@ def is_bordered(A, i, j, size, val):
 
   return True
 
+assert f([[]]) == []
+assert f([]) == []
+assert f(None) == []
+
+assert f([[1,1,1,1],
+          [1,1,1,1],
+          [1,1,1,1],
+          [1,1,1,1],]) == []
 
 assert f([[0,0,0,0],
           [0,0,0,0],
@@ -42,6 +50,12 @@ assert f([[1,0,0,0],
           [0,0,0,0],
           [0,0,0,0],
           [0,0,0,0],]) == [[0,0,0],
+                           [0,0,0],
+                           [0,0,0],]
+assert f([[0,0,0,0],
+          [0,0,0,0],
+          [0,0,0,0],
+          [0,0,0,1],]) == [[0,0,0],
                            [0,0,0],
                            [0,0,0],]
 assert f([[1,0,0,0],
