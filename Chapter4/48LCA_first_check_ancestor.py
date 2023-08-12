@@ -5,17 +5,18 @@ def f(x, p, q):
 
   return g(x, p, q)
 
-def g(x, p, q):
-  if x is None or x.val == p.val or x.val == q.val:
-    return x
-  is_left_p_anc = is_ancestor(x.left, p)
-  is_left_q_anc = is_ancestor(x.left, q)
+def common_ancestor(root, p, q):
+    if root is None or root == p or root == q:
+        return root
 
-  if is_left_p_anc and is_left_q_anc:
-    return g(x.left, p, q)
-  elif is_left_p_anc or is_left_q_anc:
-    return x
-  return g(x.right, p, q)
+    left = common_ancestor(root.left, p, q)
+    right = common_ancestor(root.right, p, q)
+
+    # if one node is found on left and one on right, then root is their common ancestor
+    if left and right:
+        return root
+    # otherwise, whichever side is non-null is the side where both nodes are
+    return left or right
 
 def is_ancestor(p, q):
   if p is None: return False
