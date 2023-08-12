@@ -41,7 +41,7 @@ def get_lca(p, q, seen, bt):
     if llca and rlca:
         return bt
 
-    return llca if llca else rlca
+    return llca or rlca
 
 
 def is_ancestor(bt, x):
