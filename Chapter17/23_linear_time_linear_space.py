@@ -25,9 +25,9 @@ def get_B(A, value=0):
   for i in range(n - 1, -1, -1):
     for j in range(n - 1, -1, -1):
       if A[i][j] != value: continue
-      B[i][j] = [1, 1]
-      if i + 1 < n: B[i][j][0] += B[i + 1][j][0]
-      if j + 1 < n: B[i][j][1] += B[i][j + 1][1]
+      B[i][j] = [
+          1 + (B[i+1][j][0] if i+1 < n else 0),
+          1 + (B[i][j+1][1] if j+1 < n else 0),]
 
   return B
 
