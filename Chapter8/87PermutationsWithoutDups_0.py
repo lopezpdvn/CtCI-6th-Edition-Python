@@ -3,14 +3,13 @@
 # Write a method to compute all permutations of
 # a string of unique characters
 
-def g(s):
-    if not s:
+def g(C):
+    if not C:
         yield ''
         return
-    c = s[0]
-    for subperm in g(s[1:]):
-        for i in range(len(subperm) + 1):
-            yield subperm[:i] + c + subperm[i:]
+    for subperm in g(C[1:]):
+        for i in range(len(C)):
+            yield subperm[:i] + C[0] + subperm[i:]
 
 f = lambda s: (*g(s),)
 
