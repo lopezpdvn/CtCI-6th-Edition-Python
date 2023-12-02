@@ -1,7 +1,8 @@
 def f(A):
   A, max_eq_dim, irow, icol = A or [[]], 0, 0, 0
   if not A or not A[0]: return []
-  B = get_B(A)
+  B, has_value = get_B(A)
+  if not has_value: return []
 
   for i in range(len(A)):
     for j in range(len(A)):
@@ -19,17 +20,19 @@ def f(A):
 
 def get_B(A, value=0):
   n = len(A)
-  B = [[[0,0] for i in range(n)]
-              for j in range(n)]
-
+  B = [[None] * n for _ in range(n)]
+  has_value = False
   for i in range(n - 1, -1, -1):
     for j in range(n - 1, -1, -1):
-      if A[i][j] != value: continue
+      if A[i][j] != value:
+        B[i][j] = [0, 0]
+        continue
       B[i][j] = [
           1 + (B[i+1][j][0] if i+1 < n else 0),
           1 + (B[i][j+1][1] if j+1 < n else 0),]
+      has_value = True
 
-  return B
+  return (B, has_value)
 
 assert f([[]]) == []
 assert f([]) == []
