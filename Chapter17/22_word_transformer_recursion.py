@@ -1,7 +1,9 @@
 def f(src, dst, words):
     if src == dst:
         return (src,)
-    nbor1chr = get_nbor1chr(words)
+    is_valid, nbor1chr = get_nbor1chr(
+                        words, src, dst)
+    if not is_valid: return ()
     from collections import deque
     path = deque()
     visited = set()
@@ -33,18 +35,23 @@ def get_nbors(nbor1chr, visited, x):
             yield nbor
 
 
-def get_nbor1chr(words):
+def get_nbor1chr(words, src, dst):
+    seen_src = False; seen_dst = False
     from collections import defaultdict
     nbor1chr = defaultdict(set)
     n = len(words[0])
     for word in words:
+        seen_src |= word == src
+        seen_dst |= word == dst
         for i in range(n):
             key = f'{word[:i]}*{word[i + 1:]}'
             nbor1chr[key].add(word)
 
-    return nbor1chr
+    return (seen_src and seen_dst, nbor1chr)
 
 assert f('DAMP', 'DAMP', ()) == ('DAMP',)
 assert f('DAMP', 'LIKE', (
     'LIMP', 'LAMP', 'DAMP', 'LIKE', 'LIME')) == (
         'DAMP', 'LAMP', 'LIMP', 'LIME', 'LIKE')
+assert f('DAMP', 'LIKE', (
+    'DMMP', 'LAMP', 'LIMP', 'LIME', 'LIKE')) == ()
