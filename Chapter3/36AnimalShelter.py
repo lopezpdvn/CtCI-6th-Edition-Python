@@ -19,14 +19,13 @@ class Shelter:
 
   def dequeue(self):
     if not self: raise Exception()
-    if not self.cats:
-      animal = self.dogs.popleft()[1]
-    elif not self.dogs:
-      animal = self.cats.popleft()[1]
-    else:
+    if self.cats and self.dogs:
       animal = (self.dogs.popleft()[1]
         if self.dogs[0][0] < self.cats[0][0]
         else self.cats.popleft()[1])
+    else:
+      animal = (self.dogs.popleft()[1]
+        if self.dogs else self.cats.popleft()[1])
     return animal
 
   def dequeue_dog(self):
