@@ -8,6 +8,7 @@ def f(A):
     for j in range(len(A)):
       left, up = B[i][j]
       imax_eq_dim = min(left, up)
+      if not imax_eq_dim: continue
       down  = B[i + imax_eq_dim - 1][j][1]
       right = B[i][j + imax_eq_dim - 1][0]
       imax_eq_dim = min(imax_eq_dim, down, right)
