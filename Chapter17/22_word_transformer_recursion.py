@@ -1,3 +1,7 @@
+# N is number of words
+# L is length of word
+# M is the cardinality of the character set
+
 def f(src, dst, words):
   if not words: return ()
   is_valid, nbor1chr = get_nbor1chr(
@@ -53,6 +57,6 @@ assert f('DAMP', 'LIKE', (
 assert f('DAMP', 'LIKE', (
   'DMMP', 'LAMP', 'LIMP', 'LIME', 'LIKE')) == ()
 
-# time O(NLM)
-# space O(NL)
-# where N is number of words, L is length of words, and M is the cardinality of the character set
+# Time: NL + (M^L)*(M-1)*L
+#       where NL >= M^L
+# Space: M^L + M^L)*(M-1)*L
