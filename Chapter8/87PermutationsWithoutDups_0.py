@@ -18,3 +18,7 @@ assert f('a') == ('a',)
 assert f('ab') == ('ab', 'ba')
 assert f('abc') == ('abc', 'bac', 'bca',
                     'acb', 'cab', 'cba')
+
+# Time: O(n!)
+# Space: O(n)
+# where n == len(C)
