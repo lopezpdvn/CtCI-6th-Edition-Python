@@ -1,54 +1,50 @@
-def f(bt, p, q):
+def f(x, a, b):
+    if not x:
+        if not a and not b:
+            return x
+        else:
+            raise Exception()
+    
+    if a and not b:
+        lca = get_node(x, a)
+        if lca:
+            return lca
+        else:
+            raise Exception()
 
-    seen = {}
+    if b and not a:
+        lca = get_node(x, b)
+        if lca:
+            return lca
+        else:
+            raise Exception()
 
-    lca = get_lca(p, q, seen, bt)
-    if seen.get('p') and seen.get('q'):
+    if not a and not b:
+        return deepest_leaf(x)
+
+    seen = {'a': None, 'b': None}
+    lca = get_lca(seen, a, b, x)
+
+    if not lca: raise Exception()
+    seen['a'] = seen['a'] if seen['a'] else get_node(x, a)
+    seen['b'] = seen['b'] if seen['b'] else get_node(x, b)
+    if seen['a'] and seen['b']:
         return lca
 
-    if not seen.get('p') and not seen.get('q'):
-        return None
-
-    if not lca:
-        return lca
-
-    if not seen.get('q'):
-        seen['q'] = is_ancestor(bt, q)
-
-    if not seen.get('p'):
-        seen['p'] = is_ancestor(bt, p)
-
-    if seen.get('p') and seen.get('q'):
-        return lca
-
-    return None
-
-def get_lca(p, q, seen, bt):
-    if not bt:
-        return bt
-
-    if bt == p:
-        seen['p'] = True
-        return bt
-
-    if bt == q:
-        seen['q'] = True
-        return bt
-
-    llca = get_lca(p, q, seen, bt.left)
-    rlca = get_lca(p, q, seen, bt.right)
-
-    if llca and rlca:
-        return bt
-
-    return llca or rlca
+    raise Exception()
 
 
-def is_ancestor(bt, x):
-    if not bt or not x:
-        return True
+def get_lca(seen, a, b, x):
+    if not x: return x
+    if x == a:
+        seen['a'] = a
+        return x
+    if x == b:
+        seen['b'] = b
+        return x
 
-    if bt == x:
-        return True
+    llca = get_lca(seen, a, b, x.left)
+    rlca = get_lca(seen, a, b, x.right)
+    if llca and rlca: return x
 
-    return is_ancestor(bt.left, x) or is_ancestor(bt.right, x)
+    return llca if llca else rlca
