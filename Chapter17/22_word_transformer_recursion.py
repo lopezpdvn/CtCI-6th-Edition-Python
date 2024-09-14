@@ -1,30 +1,27 @@
-# N is number of words
+# N is number of WW
 # L is length of word
 # M is the cardinality of the character set
 
-def f(src, dst, words):
-  src, dst, words = (
-    src or '', dst or '', words or ())
-  if not words: return ()
-  is_valid, G = build_graph(words, src, dst)
-  if not is_valid: return ()
+def f(A, B, WW):
+  A, B, WW = A or '', B or '', WW or ()
   from collections import deque
-  path, visited = deque(), set()
-  g(dst, G, path, visited, src)
-  return (*path,)
+  has_AB, G, path, visited = (
+    *build_graph(WW, A, B), deque(), set())
+  if not has_AB: return ()
+  return (*g(B, G, path, visited, A),)
 
-def g(dst, G, path, visited, src):
-  visited.add(src)
-  if src == dst:
-    path.appendleft(src)
-    return True
+def g(B, G, path, visited, A):
+  visited.add(A)
+  if A == B:
+    path.appendleft(A)
+    return path
 
-  for nbor in get_nbors(G, visited, src):
-    if g(dst, G, path, visited, nbor):
-      path.appendleft(src)
-      return True
+  for nbor in get_nbors(G, visited, A):
+    if g(B, G, path, visited, nbor):
+      path.appendleft(A)
+      return path
 
-  return False
+  return path
 
 def get_nbors(G, visited, x):
   n = len(x)
@@ -35,18 +32,18 @@ def get_nbors(G, visited, x):
         yield nbor
 
 
-def build_graph(words, src, dst):
-  seen_src, seen_dst = False, False
+def build_graph(WW, A, B):
+  seen_A, seen_B = False, False
   from collections import defaultdict
   G = defaultdict(set)
-  for word in words:
-    seen_src |= word == src
-    seen_dst |= word == dst
+  for word in WW:
+    seen_A |= word == A
+    seen_B |= word == B
     for i in range(len(word)):
       key = f'{word[:i]}*{word[i + 1:]}'
       G[key].add(word)
 
-  return (seen_src and seen_dst, G)
+  return (seen_A and seen_B, G)
 
 assert f('DAMP', 'DAMP', ()) == ()
 assert f('DAMP', 'DAMP', ('DAMP',)) == ('DAMP',)
@@ -56,6 +53,6 @@ assert f('DAMP', 'LIKE', (
 assert f('DAMP', 'LIKE', (
   'DMMP', 'LAMP', 'LIMP', 'LIME', 'LIKE')) == ()
 
-# Time: NL + (M^L)*(M-1)*L
+# Time: NL + (M^L)ML
 #       where NL >= M^L
-# Space: (M^L)*(M-1)*L
+# Space: (M^L)ML
