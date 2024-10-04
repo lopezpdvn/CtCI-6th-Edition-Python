@@ -1,22 +1,27 @@
-def g(A):
-  from collections import deque
-  seq = deque()
-  if (   not A or not A[0] or not A[-1][-1]
-      or not h(A, seq, 0, 0)):
-    return deque()
-  return seq
+from collections import deque
 
-def h(A, seq, i, j):
-  if i == len(A) or j == len(A[0]) or not A[i][j]:
-    return False
-  if ((i == len(A) - 1 and j == len(A[0]) - 1) 
-    or h(A, seq, i+1, j) or h(A, seq, i, j+1)):
-    seq.appendleft((i, j))
-    return True
+def g(A, i, j):
+    m, n = len(A), len(A[0])
+    if i == m or j == n or not A[i][j]:
+        return deque()
 
-  return False
+    if i == m - 1 and j == n - 1:
+        return deque(((i, j),))
 
-f = lambda maze: (*g(maze),)
+    path = g(A, i + 1, j)
+    if path:
+        path.appendleft((i, j))
+        return path
+
+    path = g(A, i, j + 1)
+    if path:
+        path.appendleft((i, j))
+        return path
+
+f = lambda maze: (*g(maze, 0, 0),)
+
+# Time: 2^(m+n)
+# Space: m + n
 
 x = ((1, 1, 1, 1),
      (1, 1, 1, 1),
