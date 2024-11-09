@@ -1,44 +1,34 @@
-class CellState:
+class State:
     Empty = 0
     Red = 1
     Blue = 2
 
 def f(A):
-    if not A: return CellState.Empty
+    if not A: return State.Empty
     n = len(A)
     result = evaline(A, 0, 0, 1, 1)
-    if result != CellState.Empty:
-        return result
+    if result != State.Empty: return result
     result = evaline(A, 0, n - 1, 1, -1)
-    if result != CellState.Empty:
-        return result
+    if result != State.Empty: return result
     for k in range(n):
         result = evaline(A, k, 0, 0, 1)
-        if result != CellState.Empty:
-            return result
+        if result != State.Empty: return result
         result = evaline(A, 0, k, 1, 0)
-        if result != CellState.Empty:
-            return result
+        if result != State.Empty: return result
 
-    return CellState.Empty
+    return State.Empty
 
-def evaline(A, row, col, rmove, cmove):
-    n = len(A)
-    result = None
-    i = row
-    j = col
+def evaline(A, i, j, rmove, cmove):
+    x, n = None, len(A)
     while i < n and j < n:
-        if result is None:
-            result = A[i][j]
-            if result == CellState.Empty:
-                return result
-        elif result != A[i][j]:
-            return CellState.Empty
-
+        if x is None and A[i][j] != State.Empty:
+            x = A[i][j]
+        elif x != A[i][j]:
+            return State.Empty
         i += rmove
         j += cmove
 
-    return result
+    return x
 
 assert f([[1, 1],
           [2, 0]]) == 1
