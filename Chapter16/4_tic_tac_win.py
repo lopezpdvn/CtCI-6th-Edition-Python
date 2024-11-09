@@ -1,7 +1,5 @@
 class State:
-    Empty = 0
-    Red = 1
-    Blue = 2
+    Empty = 0; Red = 1; Blue = 2
 
 def f(A):
     if not A: return State.Empty
