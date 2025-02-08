@@ -1,16 +1,11 @@
-from math import inf
+def g(x):
+    if not x: return (None, True)
+    lh, lisb = g(x.left)
+    if not lisb: return (None, False)
+    rh, risb = g(x.right)
+    if not risb: return (None, False)
+    return (1 + max(lh, rh), abs(lh - rh) <= 1)
 
-def f(p):
-    return get_height(p) != -inf
-
-def get_height(p):
-    if p is None: return -1
-    left_branch_h = get_height(p.left)
-    if left_branch_h == -inf: return -inf
-    right_branch_h = get_height(p.right)
-    if right_branch_h == -inf: return -inf
-
-    if abs(left_branch_h - right_branch_h) > 1:
-        return -inf
-
-    return max(left_branch_h, right_branch_h) + 1
+def f(x):
+    _, isb = g(x)
+    return isb
