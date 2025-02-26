@@ -8,7 +8,7 @@ def h(slen, mset, perm):
         return
     for char, count in mset.items():
         if not count: continue
-        mset[char] -= 1
+        mset[char] = count - 1
         yield from h(slen, mset, perm + char)
         mset[char] = count
 
