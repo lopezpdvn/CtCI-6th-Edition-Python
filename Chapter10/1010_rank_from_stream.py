@@ -1,36 +1,36 @@
 class BSTNode:
-  def __init__(self, value, left=None,right=None):
+  def __init__(self, value, L=None,R=None):
     self.value = value
-    self.left = left
-    self.right = right
+    self.L = L
+    self.R = R
     self.lsize = 0
     self.rsize = 0
 
   def get_rank(self, value):
     if self.value == value: return self.lsize
     if value < self.value:
-      return (self.left.get_rank(value)
-              if self.left else 0)
+      return (self.L.get_rank(value)
+              if self.L else 0)
 
-    rrank = (self.right.get_rank(value)
-             if self.right else 0)
+    rrank = (self.R.get_rank(value)
+             if self.R else 0)
     return self.lsize + 1 + rrank
 
   def track(self, value):
     if value <= self.value:
       self.lsize += 1
-      if self.left:
-        return self.left.track(value)
+      if self.L:
+        return self.L.track(value)
       else:
-        self.left = BSTNode(value)
-        return self.left
+        self.L = BSTNode(value)
+        return self.L
     else:
       self.rsize += 1
-      if self.right:
-        return self.right.track(value)
+      if self.R:
+        return self.R.track(value)
       else:
-        self.right = BSTNode(value)
-        return self.right
+        self.R = BSTNode(value)
+        return self.R
 
 class DS:
   def __init__(self, *es):
