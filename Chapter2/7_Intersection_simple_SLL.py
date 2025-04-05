@@ -1,29 +1,28 @@
 def f(a, b):
-    if not a or not b: return None
-    ah, alen, bh ,blen = a, 1, b, 1
-
+    if not a or not b:
+        return None
+    ah, bh, al, bl = a, b, 1, 1
     while a.next:
-        alen += 1
+        al += 1
         a = a.next
-
     while b.next:
-        blen += 1
+        bl += 1
         b = b.next
 
     if a != b: return None
     a, b = ah, bh
 
-    for i in range(abs(alen - blen)):
-        if alen >= blen:
+    if al > bl:
+        for _ in range(al - bl):
             a = a.next
-        else:
+    elif al < bl:
+        for _ in range(bl - al):
             b = b.next
+    
+    while True:
+        if a == b: return a
+        a, b = a.next, b.next
 
-    for i in range(min(alen, blen)):
-        if a == b:
-            return a
-        else:
-            a, b = a.next, b.next
 
 import unittest
 
