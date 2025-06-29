@@ -32,3 +32,6 @@ def get_lca(seen, a, b, x):
     rlca = get_lca(seen, a, b, x.right)
     if llca and rlca: return x
     return llca or rlca
+
+# Time: O(n)
+# Space: O(n)
