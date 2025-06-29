@@ -15,8 +15,8 @@ def f(x, a, b):
     seen = {'a': None, 'b': None}
     lca = get_lca(seen, a, b, x)
     if not lca: raise Exception()
-    seen['a'] = seen['a'] if seen['a'] else get_node(x, a)
-    seen['b'] = seen['b'] if seen['b'] else get_node(x, b)
+    seen['a'] = seen.get('a', get_node(x, a))
+    seen['b'] = seen.get('b', get_node(x, b))
     if seen['a'] and seen['b']: return lca
     raise Exception()
 
